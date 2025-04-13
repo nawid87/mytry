@@ -188,7 +188,7 @@
             const shortlinkBtn = document.getElementById('shortlinkBtn');
             
             // Replace this URL with your actual GPLinks URL
-            const gplinksUrl = 'https://gplinks.co/your-link-here';
+            const gplinksUrl = 'https://gplinks.co/Uq5Y';
             
             shortlinkBtn.addEventListener('click', function() {
                 // Open the shortlink in a new tab
@@ -213,7 +213,7 @@
                 timeLeft--;
                 timerElement.textContent = `Please complete the ad within ${timeLeft} seconds`;
                 
-                if (timeLeft <= 0) {
+                if (timeLeft <= 100) {
                     clearInterval(timerInterval);
                     timerElement.textContent = 'Time expired. Please click the button again if needed.';
                 }
