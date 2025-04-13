@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Shortlink Ad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 150px;
+            margin: 0.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #3498db;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Complete a Shortlink Ad to Continue</h1>
+            <p>Please complete a quick advertisement to support our service. It only takes a few seconds!</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Click Button</h3>
+                    <p>Click the button below to open the shortlink</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Complete Ad</h3>
+                    <p>View the advertisement and wait for the timer</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Get Access</h3>
+                    <p>You'll be redirected automatically after completion</p>
+                </div>
+            </div>
+            
+            <button id="shortlinkBtn" class="btn">Continue to Shortlink Ad</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Thank you for supporting our service!</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const shortlinkBtn = document.getElementById('shortlinkBtn');
+            
+            // Replace this URL with your actual GPLinks URL
+            const gplinksUrl = 'https://gplinks.co/your-link-here';
+            
+            shortlinkBtn.addEventListener('click', function() {
+                // Open the shortlink in a new tab
+                window.open(gplinksUrl, '_blank');
+                
+                // Optional: You can add tracking or confirmation logic here
+                console.log('User clicked the shortlink button');
+                
+                // Optional: Show a message after clicking
+                shortlinkBtn.textContent = 'Please complete the ad...';
+                shortlinkBtn.style.backgroundColor = '#27ae60';
+            });
+            
+            // Optional: Add a countdown timer
+            let timeLeft = 30;
+            const timerElement = document.createElement('div');
+            timerElement.style.marginTop = '1rem';
+            timerElement.style.color = '#7f8c8d';
+            shortlinkBtn.parentNode.insertBefore(timerElement, shortlinkBtn.nextSibling);
+            
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Please complete the ad within ${timeLeft} seconds`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = 'Time expired. Please click the button again if needed.';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
