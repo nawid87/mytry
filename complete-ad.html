@@ -191,14 +191,14 @@
             const gplinksUrl = 'https://gplinks.co/XBIv';
             
             shortlinkBtn.addEventListener('click', function() {
-                // Open the shortlink in a new tab
-                window.open(gplinksUrl, '_blank');
+                // Open the shortlink in the same tab
+                window.location.href = gplinksUrl;
                 
                 // Optional: You can add tracking or confirmation logic here
                 console.log('User clicked the shortlink button');
                 
-                // Optional: Show a message after clicking
-                shortlinkBtn.textContent = 'Please complete the ad...';
+                // Optional: Show a message before redirecting
+                shortlinkBtn.textContent = 'Redirecting...';
                 shortlinkBtn.style.backgroundColor = '#27ae60';
             });
             
@@ -213,7 +213,7 @@
                 timeLeft--;
                 timerElement.textContent = `Please complete the ad within ${timeLeft} seconds`;
                 
-                if (timeLeft <= 100) {
+                if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     timerElement.textContent = 'Time expired. Please click the button again if needed.';
                 }
