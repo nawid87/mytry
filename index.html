@@ -23,39 +23,61 @@
             color: #ffffff;
             text-align: center;
             padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
         }
 
         .container {
-            max-width: 480px;
-            width: 100%;
+            max-width: 520px;
+            width: 90%;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            animation: slideIn 0.6s ease-out;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            backdrop-filter: blur(14px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.8s ease-out;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
             font-weight: 600;
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+            animation: textGlow 2.5s ease-in-out infinite;
         }
 
         p {
             font-weight: 400;
             font-size: 1rem;
-            line-height: 1.5;
-            opacity: 0.85;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .countdown {
+            font-size: 1.1rem;
+            font-weight: 500;
             margin-bottom: 1.5rem;
+            opacity: 0.85;
         }
 
         .progress-bar {
             width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
             overflow: hidden;
             margin-bottom: 1.5rem;
         }
@@ -63,33 +85,72 @@
         .progress {
             width: 0;
             height: 100%;
-            background: #ffffff;
-            border-radius: 2px;
-            animation: load 5s ease-in-out forwards;
+            background: linear-gradient(90deg, #ffffff, #a5b4fc);
+            border-radius: 3px;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
         }
 
         .btn {
             display: inline-block;
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 1.6rem;
             background: #ffffff;
             color: #4f46e5;
             font-weight: 500;
             font-size: 0.95rem;
             text-decoration: none;
             border-radius: 9999px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
             cursor: pointer;
             border: none;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #e0e7ff;
         }
 
         .btn:active {
-            transform: translateY(0);
+            transform: scale(0.95);
         }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .btn:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+            opacity: 0.7;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .icon:nth-child(2) { animation-delay: 0.5s; }
+        .icon:nth-child(3) { animation-delay: 1s; }
 
         .loading-overlay {
             position: fixed;
@@ -99,7 +160,7 @@
             place-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
             z-index: 1000;
         }
 
@@ -109,17 +170,47 @@
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        .spinner::before,
+        .spinner::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: orbit 1.5s ease-in-out infinite;
+        }
+
+        .spinner::after {
+            animation-delay: -0.75s;
+        }
+
+        .quote {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+            max-width: 85%;
+            margin-top: 1.5rem;
+            animation: fadeInQuote 0.8s ease-in;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            60% { opacity: 1; transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
         }
 
         @keyframes load {
@@ -127,55 +218,170 @@
             100% { width: 100%; }
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes orbit {
+            0% { transform: translateX(0) scale(1); opacity: 1; }
+            50% { transform: translateX(20px) scale(0.5); opacity: 0.5; }
+            100% { transform: translateX(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeInQuote {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 0.9; transform: translateY(0); }
         }
 
         @media (max-width: 480px) {
             .container {
                 padding: 1.5rem;
+                width: 95%;
             }
 
             h1 {
                 font-size: 1.5rem;
             }
 
-            p {
+            p, .countdown, .quote {
                 font-size: 0.9rem;
             }
 
             .btn {
-                padding: 0.65rem 1.25rem;
+                padding: 0.7rem 1.4rem;
                 font-size: 0.9rem;
+            }
+
+            .icons {
+                gap: 0.75rem;
+            }
+
+            .icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
+    <canvas id="particleCanvas"></canvas>
     <main class="container">
         <h1>Redirecting You Now</h1>
         <p>You're being taken to your destination. Click below if the redirect doesn't start.</p>
+        <div class="countdown" id="countdown">Redirecting in <span id="timer"></span> seconds...</div>
+        <div class="icons">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm0-12a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z"/></svg>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5l4-4a1 1 0 00-1.41-1.41L11 12.17V7a1 1 0 00-2 0v8a1 1 0 002 0z"/></svg>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-5h4a1 1 0 000-2h-4a1 1 0 000 2z"/></svg>
+        </div>
         <div class="progress-bar">
-            <div class="progress"></div>
+            <div class="progress" id="progress"></div>
         </div>
         <button class="btn" id="redirectBtn">Go Now</button>
     </main>
 
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
+        <div class="quote" id="quote"></div>
     </div>
 
     <script>
+        // Particle background
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
         // Prevent history manipulation
         history.pushState(null, null, location.href);
         window.onpopstate = () => history.go(1);
 
         const redirectBtn = document.getElementById('redirectBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
+        const quoteElement = document.getElementById('quote');
         const container = document.querySelector('.container');
+        const timerElement = document.getElementById('timer');
+        const progressElement = document.getElementById('progress');
         const destination = 'https://pig-calculated-controls-advances.trycloudflare.com';
 
+        const quotes = [
+            "Patience turns dreams into achievements.",
+            "Kindness is a gift that grows with giving.",
+            "Seek knowledge to light your path.",
+            "Every step forward is a victory.",
+            "Trust in time to reveal truth."
+        ];
+
+        // Random redirect time between 10 and 15 seconds
+        const redirectTime = Math.floor(Math.random() * (15000 - 10000 + 1)) + 10000;
+        let timeLeft = Math.ceil(redirectTime / 1000);
+
+        // Countdown timer
+        timerElement.textContent = timeLeft;
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            if (timeLeft <= 0) clearInterval(countdownInterval);
+        }, 1000);
+
+        // Dynamic progress bar animation
+        progressElement.style.animation = `load ${redirectTime}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+
         function showLoading() {
+            quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
             loadingOverlay.classList.add('active');
             container.style.opacity = '0';
             container.style.transform = 'translateY(15px)';
@@ -185,20 +391,27 @@
             showLoading();
             setTimeout(() => {
                 window.location.replace(destination);
-            }, 400);
+            }, 500);
         }
 
         redirectBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            clearInterval(countdownInterval);
             redirect();
         });
 
-        // Auto-redirect after 5 seconds
-        setTimeout(redirect, 5000);
+        // Auto-redirect after random time
+        setTimeout(redirect, redirectTime);
 
         // Prevent scrolling during redirect
         window.addEventListener('beforeunload', () => {
             window.scrollTo(0, 0);
+        });
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
     </script>
 </body>
