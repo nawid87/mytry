@@ -22,6 +22,7 @@
             color: white;
             text-align: center;
             padding: 20px;
+            overflow: hidden;
         }
         
         .container {
@@ -33,6 +34,8 @@
             padding: 40px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             animation: fadeIn 0.8s ease-out;
+            position: relative;
+            transition: all 0.5s ease;
         }
         
         h1 {
@@ -83,6 +86,45 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -91,6 +133,10 @@
         @keyframes progress {
             from { width: 0%; }
             to { width: 100%; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         @media (max-width: 480px) {
@@ -105,6 +151,10 @@
             .btn {
                 padding: 10px 20px;
             }
+            
+            .loading-text {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -117,15 +167,39 @@
             <div class="progress"></div>
         </div>
         
-        <a href="https://pig-calculated-controls-advances.trycloudflare.com" class="btn">Continue Now</a>
+        <a href="https://pig-calculated-controls-advances.trycloudflare.com" class="btn" id="redirectBtn">Continue Now</a>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading destination website...</div>
     </div>
 
     <script>
-        // Set timeout for redirect
+        // Show loading overlay when redirecting
+        document.getElementById('redirectBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            showLoadingOverlay();
+            setTimeout(function() {
+                window.location.href = "https://pig-calculated-controls-advances.trycloudflare.com";
+            }, 500);
+        });
+
+        // Set timeout for automatic redirect
         setTimeout(function() {
-            window.location.href = "https://pig-calculated-controls-advances.trycloudflare.com";
+            showLoadingOverlay();
+            setTimeout(function() {
+                window.location.href = "https://pig-calculated-controls-advances.trycloudflare.com";
+            }, 500);
         }, 5000);
-        
+
+        function showLoadingOverlay() {
+            document.getElementById('loadingOverlay').classList.add('active');
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.transform = 'translateY(20px)';
+        }
+
         // Fallback in case meta refresh doesn't work
         document.addEventListener('DOMContentLoaded', function() {
             const meta = document.createElement('meta');
